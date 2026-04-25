@@ -1,4 +1,5 @@
 import { ThemeProvider } from "@/components/theme/theme-provider";
+import { Toaster } from "@/components/ui/sonner";
 import type { Metadata } from "next";
 import { Outfit } from "next/font/google";
 import "../globals.css";
@@ -32,7 +33,8 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <main className="w-full">{children}</main>
+          <main className="w-full min-h-full flex flex-col">{children}</main>
+          <Toaster />
         </ThemeProvider>
       </body>
     </html>
