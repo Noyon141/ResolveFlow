@@ -1,7 +1,11 @@
 import {
   boolean,
   index,
+  integer,
+  jsonb,
+  pgEnum,
   pgTable,
+  primaryKey,
   text,
   timestamp,
   uuid,
@@ -13,6 +17,7 @@ export const user = pgTable("user", {
   name: text("name").notNull(),
   email: text("email").notNull().unique(),
   emailVerified: boolean("email_verified").default(false).notNull(),
+
   image: text("image"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at")
@@ -87,3 +92,70 @@ export const verification = pgTable(
 );
 
 //MAIN
+
+export const workspace = pgTable("workspace", {
+  id: uuid("id").primaryKey().defaultRandom().notNull(),
+  name: text("name").notNull(),
+  description: text("description"),
+  userId: uuid("user_id")
+    .notNull()
+    .references(() => user.id, { onDelete: "cascade" }),
+
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export const workspaceMember = pgTable(
+  "workspace_member",
+  {
+    workspaceId: uuid("workspace_id")
+      .notNull()
+      .references(() => workspace.id, { onDelete: "cascade" }),
+    userId: uuid("user_id")
+      .notNull()
+      .references(() => user.id, { onDelete: "cascade" }),
+    role: text("role").default("member").notNull(),
+    createdAt: timestamp("created_at").defaultNow().notNull(),
+  },
+  (table) => [
+    primaryKey({ columns: [table.workspaceId, table.userId] }),
+
+    index("workspace_member_workspaceId_idx").on(table.workspaceId),
+    index("workspace_member_userId_idx").on(table.userId),
+  ],
+);
+
+export const statusEnum = pgEnum("status", ["OPEN", "RESOLVING", "CLOSED"]);
+export const sentimentEnum = pgEnum("sentiment", [
+  "POSITIVE",
+  "NEUTRAL",
+  "NEGATIVE",
+]);
+
+export const ticket = pgTable("ticket", {
+  id: uuid("id").primaryKey().defaultRandom().notNull(),
+  workspaceId: uuid("workspace_id")
+    .notNull()
+    .references(() => workspace.id, { onDelete: "cascade" }),
+
+  customerEmail: text("customer_email").notNull(),
+  subject: text("subject").notNull(),
+
+  status: statusEnum("status").default("OPEN").notNull(),
+  sentiment: sentimentEnum("sentiment").default("NEUTRAL").notNull(),
+
+  urgencyScore: integer("urgency_score").default(0).notNull(),
+
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export const ticket_draft = pgTable("ticket_draft", {
+  id: uuid("id").primaryKey().defaultRandom().notNull(),
+  ticketId: uuid("ticket_id")
+    .notNull()
+    .references(() => ticket.id, { onDelete: "cascade" }),
+
+  geminiDraftContent: jsonb("gemini_draft_content").notNull(),
+  confidenceScore: integer("confidence_score").default(0).notNull(),
+
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
