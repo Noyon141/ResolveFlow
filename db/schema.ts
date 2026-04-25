@@ -78,3 +78,7 @@ export const verification = pgTable(
   },
   (table) => [index("verification_identifier_idx").on(table.identifier)],
 );
+
+//MAIN
+
+
