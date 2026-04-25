@@ -32,9 +32,9 @@ const HomePage = () => {
             </span>
           </Badge>
 
-          <h1 className="text-5xl md:text-7xl font-black tracking-tight text-foreground leading-[1.1]">
+          <h1 className="text-5xl md:text-7xl font-black text-foreground leading-[1.1] md:tracking-wider">
             Triage Support Tickets <br className="hidden sm:block" />
-            <span className="text-transparent bg-clip-text bg-linear-to-r from-primary to-primary-foreground">
+            <span className="text-transparent bg-clip-text bg-linear-to-b from-primary to-primary-foreground">
               Before They Escalate
             </span>
           </h1>
@@ -67,7 +67,7 @@ const HomePage = () => {
 
         {/* Feature Cards - App-like Grid */}
         <div className="mt-24 w-full grid grid-cols-1 md:grid-cols-3 gap-6">
-          <Card className="flex flex-col p-8 rounded-[2rem] bg-background/60 backdrop-blur-md border-border/40 shadow-sm hover:shadow-md transition-all hover:bg-background/80">
+          <Card className="flex flex-col p-8 rounded-[2rem] bg-background/60 backdrop-blur-md border-border/40 shadow-sm hover:shadow-md transition-all hover:bg-background/80 dark:shadow-white/10">
             <div className="h-14 w-14 rounded-2xl bg-primary/10 flex items-center justify-center text-primary mb-6">
               <Zap className="h-7 w-7" />
             </div>
@@ -80,7 +80,7 @@ const HomePage = () => {
             </p>
           </Card>
 
-          <Card className="flex flex-col p-8 rounded-[2rem] bg-linear-to-b from-primary/10 to-transparent backdrop-blur-md border-primary/20 shadow-sm hover:shadow-md transition-all hover:border-primary/30 relative overflow-hidden">
+          <Card className="flex flex-col p-8 rounded-[2rem] bg-linear-to-b from-primary/10 to-transparent backdrop-blur-md border-primary/20 shadow-sm hover:shadow-md transition-all hover:border-primary/30 relative overflow-hidden dark:shadow-white/10">
             <div className="absolute top-0 right-0 p-4">
               <Badge className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold rounded-full">
                 Pro
@@ -98,7 +98,7 @@ const HomePage = () => {
             </p>
           </Card>
 
-          <Card className="flex flex-col p-8 rounded-[2rem] bg-background/60 backdrop-blur-md border-border/40 shadow-sm hover:shadow-md transition-all hover:bg-background/80">
+          <Card className="flex flex-col p-8 rounded-[2rem] bg-background/60 backdrop-blur-md border-border/40 shadow-sm hover:shadow-md transition-all hover:bg-background/80 dark:shadow-white/10">
             <div className="h-14 w-14 rounded-2xl bg-secondary/50 flex items-center justify-center text-primary mb-6">
               <ShieldCheck className="h-7 w-7" />
             </div>
