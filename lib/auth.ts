@@ -2,6 +2,7 @@ import { db } from "@/db";
 import * as Schema from "@/db/schema";
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
+import { admin } from "better-auth/plugins";
 
 export const auth = betterAuth({
   database: drizzleAdapter(db, {
@@ -22,4 +23,6 @@ export const auth = betterAuth({
       generateId: () => crypto.randomUUID(),
     },
   },
+
+  plugins: [admin()],
 });
