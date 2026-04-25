@@ -25,8 +25,8 @@ export function ModeToggler() {
       disabled={!mounted}
       className={cn(
         "relative h-6 w-11 min-w-0 rounded-full p-0 overflow-hidden",
-        "border-2 border-primary hover:bg-transparent aria-pressed:bg-transparent",
-        "transition-colors duration-300 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
+        "border-2 border-primary/20 hover:bg-transparent aria-pressed:bg-transparent",
+        "transition-colors duration-300 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 backdrop-blur-md dark:shadow-white/10 shadow-sm",
         !mounted && "opacity-40",
         isDark ? "bg-primary" : "bg-background",
       )}
