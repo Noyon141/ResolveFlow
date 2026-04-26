@@ -18,7 +18,7 @@ const HomePage = () => {
 
       <main className="flex-1 flex flex-col items-center justify-center px-4 md:px-8 pt-12 pb-24 max-w-7xl mx-auto w-full">
         {/* App-like Hero Section */}
-        <div className="flex flex-col items-center text-center space-y-8 max-w-4xl pt-10 md:pt-20">
+        <div className="flex flex-col items-center text-center space-y-8 min-w-fit pt-10 md:pt-20">
           <Badge
             variant="secondary"
             className="px-4 py-2 rounded-full text-sm font-medium border border-primary/10 bg-primary/5 hover:bg-primary/10 transition-colors cursor-pointer"
@@ -44,23 +44,15 @@ const HomePage = () => {
             routes incoming support emails so your team resolves issues faster.
           </p>
 
-          <div className="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto pt-4">
+          <div className="flex flex-col sm:flex-row justify-center items-center gap-4 w-full pt-4">
             <Button
               asChild
               size="lg"
-              className="w-full sm:w-auto rounded-full h-14 px-8 text-base font-bold shadow-xl shadow-primary/25 transition-transform hover:-translate-y-1 active:scale-95"
+              className="w-full md:max-w-6/12 rounded-full h-14 px-8 text-base font-bold shadow-xl shadow-primary/25 transition-transform hover:-translate-y-1 active:scale-95"
             >
-              <Link href="/sign-up">
-                Start for free <ArrowRight className="ml-2 h-5 w-5" />
+              <Link href="/sign-up" className="">
+                Start <ArrowRight className="ml-2 h-5 w-5" />
               </Link>
-            </Button>
-            <Button
-              asChild
-              variant="outline"
-              size="lg"
-              className="w-full sm:w-auto rounded-full h-14 px-8 text-base font-semibold border-border/50 bg-background/50 backdrop-blur-sm transition-transform hover:-translate-y-1"
-            >
-              <Link href="/demo">Book a Demo</Link>
             </Button>
           </div>
         </div>

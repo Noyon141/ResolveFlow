@@ -86,7 +86,10 @@ export const Header = () => {
                 <span className="sr-only">Toggle Menu</span>
               </Button>
             </SheetTrigger>
-            <SheetContent side="right" className="flex flex-col rounded-l-2xl">
+            <SheetContent
+              side="right"
+              className="flex flex-col rounded-l-2xl bg-background backdrop-blur-md "
+            >
               <SheetHeader>
                 <SheetTitle className="text-left font-black tracking-tight text-primary">
                   Resolve<span className="text-foreground">Flow</span>
