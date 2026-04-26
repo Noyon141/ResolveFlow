@@ -9,33 +9,35 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaGoogle } from "react-icons/fa";
 import { toast } from "sonner";
-import { login } from "../registration";
-import { SignInInput, signInSchema } from "../validations";
+import { registration } from "../../registration";
+import { SignUpInput, signUpSchema } from "../../validations";
 
-const SignInForm = () => {
+const SignUpForm = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const {
     register,
     handleSubmit,
+    getValues,
     formState: { errors },
-  } = useForm<SignInInput>({
-    resolver: zodResolver(signInSchema),
+  } = useForm<SignUpInput>({
+    resolver: zodResolver(signUpSchema),
   });
 
-  const startLogin = async (data: SignInInput) => {
+  const startRegistration = async (data: SignUpInput) => {
     try {
       setIsLoading(true);
-      await login({
+      await registration({
         data: {
+          name: data.name,
           email: data.email,
           password: data.password,
+          confirmPassword: data.confirmPassword,
         },
       });
     } catch (error) {
-      console.log("Error occurred while logging in❌", error);
-      toast.error("Failed to sign in");
-    } finally {
+      console.log("Error occurred while registering user❌", error);
+      toast.error("Failed to create account");
       setIsLoading(false);
     }
   };
@@ -45,12 +47,27 @@ const SignInForm = () => {
       <div className="w-full max-w-md mx-auto space-y-8">
         <div className="text-center space-y-2">
           <h1 className="text-3xl md:text-4xl font-bold tracking-tight">
-            Welcome Back
+            Create Account
           </h1>
-          <p className="text-muted-foreground">Sign in to your account</p>
+          <p className="text-muted-foreground">
+            Sign up to get started with your account
+          </p>
         </div>
 
-        <form onSubmit={handleSubmit(startLogin)} className="space-y-6">
+        <form onSubmit={handleSubmit(startRegistration)} className="space-y-6">
+          <Field>
+            <FieldLabel htmlFor="name">Full Name</FieldLabel>
+            <Input
+              id="name"
+              type="text"
+              placeholder="John Doe"
+              disabled={isLoading}
+              {...register("name")}
+              aria-invalid={!!errors.name}
+            />
+            {errors.name && <FieldError>{errors.name.message}</FieldError>}
+          </Field>
+
           <Field>
             <FieldLabel htmlFor="email">Email</FieldLabel>
             <Input
@@ -79,17 +96,31 @@ const SignInForm = () => {
             )}
           </Field>
 
+          <Field>
+            <FieldLabel htmlFor="confirmPassword">Confirm Password</FieldLabel>
+            <Input
+              id="confirmPassword"
+              type="password"
+              placeholder="••••••••"
+              disabled={isLoading}
+              {...register("confirmPassword")}
+              aria-invalid={!!errors.confirmPassword}
+            />
+            {errors.confirmPassword && (
+              <FieldError>{errors.confirmPassword.message}</FieldError>
+            )}
+          </Field>
+
           <Button type="submit" className="w-full" disabled={isLoading}>
             {isLoading ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Signing in...
+                Creating account...
               </>
             ) : (
-              "Sign In"
+              "Sign Up"
             )}
           </Button>
-
           <Button
             className="w-full text-lg border border-white"
             variant={"ghost"}
@@ -108,4 +139,4 @@ const SignInForm = () => {
   );
 };
 
-export default SignInForm;
+export default SignUpForm;

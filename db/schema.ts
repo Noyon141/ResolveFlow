@@ -9,7 +9,10 @@ import {
   text,
   timestamp,
   uuid,
+  varchar,
 } from "drizzle-orm/pg-core";
+
+export const roleStatus = pgEnum("role", ["ADMIN", "MANAGER", "AGENT"]);
 
 export const user = pgTable("user", {
   id: uuid("id").primaryKey().defaultRandom(),
@@ -24,7 +27,7 @@ export const user = pgTable("user", {
     .defaultNow()
     .$onUpdate(() => /* @__PURE__ */ new Date())
     .notNull(),
-  role: text("role"),
+  role: roleStatus("role").default("AGENT").notNull(),
   banned: boolean("banned").default(false),
   banReason: text("ban_reason"),
   banExpires: timestamp("ban_expires"),
@@ -97,6 +100,9 @@ export const workspace = pgTable("workspace", {
   id: uuid("id").primaryKey().defaultRandom().notNull(),
   name: text("name").notNull(),
   description: text("description"),
+
+  inboundPrefix: varchar("inbound_prefix", { length: 256 }).unique().notNull(),
+
   userId: uuid("user_id")
     .notNull()
     .references(() => user.id, { onDelete: "cascade" }),
@@ -113,7 +119,8 @@ export const workspaceMember = pgTable(
     userId: uuid("user_id")
       .notNull()
       .references(() => user.id, { onDelete: "cascade" }),
-    role: text("role").default("member").notNull(),
+    role: roleStatus("role").notNull().default("AGENT"),
+
     createdAt: timestamp("created_at").defaultNow().notNull(),
   },
   (table) => [
@@ -124,11 +131,23 @@ export const workspaceMember = pgTable(
   ],
 );
 
-export const statusEnum = pgEnum("status", ["OPEN", "RESOLVING", "CLOSED"]);
-export const sentimentEnum = pgEnum("sentiment", [
+export const ticketStatusEnum = pgEnum("ticket_status", [
+  "OPEN",
+  "RESOLVING",
+  "CLOSED",
+]);
+
+export const sentimentEnum = pgEnum("sentiment_status", [
   "POSITIVE",
   "NEUTRAL",
   "NEGATIVE",
+]);
+
+export const categoryEnum = pgEnum("category_status", [
+  "BILLING",
+  "TECHNICAL",
+  "GENERAL",
+  "REFUND",
 ]);
 
 export const ticket = pgTable("ticket", {
@@ -139,9 +158,11 @@ export const ticket = pgTable("ticket", {
 
   customerEmail: text("customer_email").notNull(),
   subject: text("subject").notNull(),
+  body: text("body").notNull(),
 
-  status: statusEnum("status").default("OPEN").notNull(),
-  sentiment: sentimentEnum("sentiment").default("NEUTRAL").notNull(),
+  status: ticketStatusEnum("ticket_status").default("OPEN").notNull(),
+  sentiment: sentimentEnum("sentiment_status"),
+  category: categoryEnum("category_status"),
 
   urgencyScore: integer("urgency_score").default(0).notNull(),
 
