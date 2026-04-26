@@ -5,7 +5,6 @@ import { Field, FieldError, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2 } from "lucide-react";
-import Link from "next/link";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaGoogle } from "react-icons/fa";
@@ -43,7 +42,6 @@ const SignUpForm = () => {
     }
   };
 
-  
   return (
     <>
       <div className="w-full max-w-md mx-auto space-y-8">
@@ -135,16 +133,6 @@ const SignUpForm = () => {
               Continue with Google <FaGoogle />
             </span>
           </Button>
-
-          <div className="text-center text-sm text-muted-foreground">
-            Already have an account?{" "}
-            <Link
-              href="/sign-in"
-              className="text-primary font-medium hover:underline"
-            >
-              Sign in
-            </Link>
-          </div>
         </form>
       </div>
     </>
