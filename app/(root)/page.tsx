@@ -50,7 +50,7 @@ const HomePage = () => {
               size="lg"
               className="w-full md:max-w-6/12 rounded-full h-14 px-8 text-base font-bold shadow-xl shadow-primary/25 transition-transform hover:-translate-y-1 active:scale-95"
             >
-              <Link href="/sign-up" className="">
+              <Link href="/registration" className="">
                 Start <ArrowRight className="ml-2 h-5 w-5" />
               </Link>
             </Button>
