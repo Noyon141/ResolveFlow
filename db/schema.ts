@@ -99,7 +99,10 @@ export const workspace = pgTable("workspace", {
   name: text("name").notNull(),
   description: text("description"),
 
-  inboundPrefix: varchar("inbound_prefix", { length: 256 }).unique().notNull(),
+  inboundPrefix: varchar("inbound_prefix", { length: 256 })
+    .unique()
+    .notNull()
+    .$defaultFn(() => Math.random().toString(36).slice(2, 12)),
 
   userId: uuid("user_id")
     .notNull()
