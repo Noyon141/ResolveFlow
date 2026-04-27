@@ -1,3 +1,4 @@
+import { redirect } from "next/navigation";
 import { toast } from "sonner";
 import { authClient } from "@/lib/auth-client";
 import type { SignInInput, SignUpInput } from "../validations";
@@ -29,9 +30,11 @@ export const submitSignin = async ({ data }: { data: SignInInput }) => {
         toast.error(ctx.error.message || "Login failed. Please try again.❌");
       },
       onSuccess: () => {
-        toast.success("Login successful! Welcome back.✅");
+        redirect("/dashboard");
       },
-      onRequest: () => {},
+      onRequest: () => {
+        toast.info("Signing in...");
+      },
     },
   });
 };

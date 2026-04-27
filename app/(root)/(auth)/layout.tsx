@@ -1,8 +1,12 @@
+import { headers } from "next/headers";
 import { redirect } from "next/navigation";
-import { authClient } from "@/lib/auth-client";
+import { auth } from "@/lib/auth";
 
 const AuthLayout = async ({ children }: { children: React.ReactNode }) => {
-  const session = await authClient.getSession();
+
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
 
   if (session) {
     redirect("/dashboard");
