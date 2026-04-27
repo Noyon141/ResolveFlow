@@ -12,8 +12,6 @@ import {
   varchar,
 } from "drizzle-orm/pg-core";
 
-export const roleStatus = pgEnum("role", ["ADMIN", "MANAGER", "AGENT"]);
-
 export const user = pgTable("user", {
   id: uuid("id").primaryKey().defaultRandom(),
 
@@ -27,7 +25,7 @@ export const user = pgTable("user", {
     .defaultNow()
     .$onUpdate(() => /* @__PURE__ */ new Date())
     .notNull(),
-  role: roleStatus("role").default("AGENT").notNull(),
+  role: text("role"),
   banned: boolean("banned").default(false),
   banReason: text("ban_reason"),
   banExpires: timestamp("ban_expires"),
@@ -109,6 +107,7 @@ export const workspace = pgTable("workspace", {
 
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
+export const roleStatus = pgEnum("role", ["ADMIN", "MANAGER", "AGENT"]);
 
 export const workspaceMember = pgTable(
   "workspace_member",
