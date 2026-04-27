@@ -3,7 +3,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { authClient } from "@/lib/auth-client";
 
-export const checkSessionClient = () => {
+export const useClientSession = () => {
   useQuery({
     queryKey: ["client-session"],
     queryFn: async () => {
