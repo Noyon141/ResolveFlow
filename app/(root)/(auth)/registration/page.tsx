@@ -1,10 +1,8 @@
-import Registration from "@/modules/auth/ui/registration";
-
 const RegistrationPage = () => {
   return (
-    <>
-      <Registration />
-    </>
+    <section>
+      <h1>Register</h1>
+    </section>
   );
 };
 
