@@ -1,8 +1,7 @@
-import { headers } from "next/headers";
 import { type NextRequest, NextResponse } from "next/server";
 import { db } from "@/db";
 import { workspace } from "@/db/schema";
-import { auth } from "@/lib/auth";
+
 import { checkServerSession } from "@/lib/check-server-session";
 
 export const createWorkspace = async (req: NextRequest) => {

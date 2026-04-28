@@ -1,14 +1,11 @@
-import { headers } from "next/headers";
 import { redirect } from "next/navigation";
-import { auth } from "@/lib/auth";
+
+import { checkServerSession } from "@/lib/check-server-session";
 
 const AuthLayout = async ({ children }: { children: React.ReactNode }) => {
+  const session = await checkServerSession();
 
-  const session = await auth.api.getSession({
-    headers: await headers(),
-  });
-
-  if (session) {
+  if (session?.session) {
     redirect("/dashboard");
   }
   return <main className="w-full min-h-full flex flex-col">{children}</main>;
