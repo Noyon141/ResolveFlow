@@ -33,11 +33,12 @@ const SignOutButton = () => {
   return (
     <>
       <Button
-        className="flex items-center justify-center gap-2 bg-accent shadow-md backdrop:backdrop-blur-2xl dark:shadow-white/10 "
+        className="flex items-center justify-center gap-2  "
         onClick={onSignOut}
         disabled={loading}
+        variant={"secondary"}
       >
-        Sign Out <LogOutIcon />
+        Sign Out <LogOutIcon className="h-4 w-4" />
       </Button>
     </>
   );

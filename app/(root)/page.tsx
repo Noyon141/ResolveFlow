@@ -1,11 +1,18 @@
+import { ArrowRight, Bot, ShieldCheck, Zap } from "lucide-react";
+import Link from "next/link";
+import { redirect } from "next/navigation";
 import { Header } from "@/components/layouts/header";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { ArrowRight, Bot, ShieldCheck, Zap } from "lucide-react";
-import Link from "next/link";
+import { checkServerSession } from "@/lib/check-server-session";
 
-const HomePage = () => {
+const HomePage = async () => {
+  const session = await checkServerSession();
+
+  if (session?.session) {
+    redirect("/dashboard");
+  }
   return (
     <section className="flex flex-col min-h-screen relative overflow-hidden bg-background">
       {/* Abstract Background Gradients */}
