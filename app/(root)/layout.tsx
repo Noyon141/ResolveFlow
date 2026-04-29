@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Outfit } from "next/font/google";
 import { Toaster } from "@/components/ui/sonner";
 import "../globals.css";
+import TanstackProvider from "@/components/tanstack-provider";
 import { ThemeProvider } from "@/components/theme/theme-provider";
 
 const outfit = Outfit({
@@ -30,15 +31,17 @@ export default function RootLayout({
         className="min-h-full flex flex-col w-full"
         suppressHydrationWarning
       >
-        <ThemeProvider
-          attribute={"class"}
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <main className="w-full min-h-full flex flex-col">{children}</main>
-          <Toaster />
-        </ThemeProvider>
+        <TanstackProvider>
+          <ThemeProvider
+            attribute={"class"}
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <main className="w-full min-h-full flex flex-col">{children}</main>
+            <Toaster />
+          </ThemeProvider>
+        </TanstackProvider>
       </body>
     </html>
   );
