@@ -1,4 +1,3 @@
-import { eq } from "drizzle-orm";
 import { ArrowRight, Building2, Key } from "lucide-react";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
@@ -11,9 +10,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { db } from "@/db";
-import { workspace, workspaceMember } from "@/db/schema";
 import { checkServerSession } from "@/lib/check-server-session";
+import { getUserWorkspaces } from "../lib/get-workspaces";
 import WorkspaceButton from "./workspace-button";
 
 const Workspace = async () => {
@@ -27,17 +25,7 @@ const Workspace = async () => {
     );
   }
 
-  const existingWorkspace = await db
-    .select({
-      id: workspace.id,
-      name: workspace.name,
-      description: workspace.description,
-      inboundPrefix: workspace.inboundPrefix,
-      role: workspaceMember.role,
-    })
-    .from(workspace)
-    .innerJoin(workspaceMember, eq(workspace.id, workspaceMember.workspaceId))
-    .where(eq(workspace.userId, session.user.id));
+  const existingWorkspace = await getUserWorkspaces();
 
   if (existingWorkspace.length === 0) {
     return (
